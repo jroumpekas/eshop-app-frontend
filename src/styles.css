@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@source "./**/*.{html,ts}";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand: #ff4757;
+}
+
+:root {
+  --page-bg: #f7f7fb;
+  --text-color: #111827;
+  --navbar-bg: #ffffff;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb;
+}
+
+html.dark {
+  --page-bg: #111827;
+  --text-color: #f9fafb;
+  --navbar-bg: #1f2937;
+  --card-bg: #374151;
+  --border-color: #4b5563;
+  color-scheme: dark;
+}
+
+html { color-scheme: light; }
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--page-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

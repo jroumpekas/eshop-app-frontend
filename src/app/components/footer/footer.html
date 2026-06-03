@@ -1,0 +1,51 @@
+<footer class="bg-neutral-900 text-neutral-100 pt-12 pb-6 mt-auto">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div class="md:col-span-4">
+        <h5 class="font-bold text-xl mb-2">E-Shop</h5>
+        <p class="text-sm text-neutral-300">
+          Το online κατάστημά σας για ό,τι χρειάζεστε.
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <h6 class="font-bold mb-3">Κατάστημα</h6>
+        <ul class="text-sm space-y-1">
+          <li><a routerLink="/products" class="text-neutral-100 no-underline hover:underline">Προϊόντα</a></li>
+          <li><a routerLink="/offers" class="text-neutral-100 no-underline hover:underline">Προσφορές</a></li>
+          <li><a routerLink="/cart" class="text-neutral-100 no-underline hover:underline">Καλάθι</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-2">
+        <h6 class="font-bold mb-3">Εταιρεία</h6>
+        <ul class="text-sm space-y-1">
+          <li><a routerLink="/about" class="text-neutral-100 no-underline hover:underline">Σχετικά</a></li>
+          <li><a routerLink="/contact" class="text-neutral-100 no-underline hover:underline">Επικοινωνία</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-4">
+        <h6 class="font-bold mb-3">Newsletter</h6>
+        <div class="flex">
+          <input type="email" placeholder="Email" aria-label="Email"
+            class="flex-1 min-w-0 px-3 py-2 rounded-l-md border border-neutral-600 border-r-0 bg-neutral-800 text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-blue-600">
+          <button type="button"
+            class="px-4 py-2 rounded-r-md bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap cursor-pointer">
+            Εγγραφή
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-neutral-600 my-6">
+
+    <div class="flex flex-col md:flex-row justify-between items-center text-sm text-neutral-400 gap-3">
+      <span>© {{ year }} E-Shop. Με επιφύλαξη παντός δικαιώματος.</span>
+      <div class="flex gap-4 mt-2 md:mt-0">
+        <a href="#" class="text-neutral-100 no-underline hover:underline">Όροι χρήσης</a>
+        <a href="#" class="text-neutral-100 no-underline hover:underline">Απόρρητο</a>
+      </div>
+    </div>
+  </div>
+</footer>

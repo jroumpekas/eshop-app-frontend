@@ -1,0 +1,5 @@
+.theme-toggle-wrapper {
+  padding: 20px 12%;
+  background-color: var(--page-bg);
+  color: var(--text-color);
+}
