@@ -1,0 +1,104 @@
+<section class="min-h-screen bg-slate-50 px-4 py-12">
+  <div class="mx-auto max-w-3xl">
+
+    <a routerLink="/products" class="mb-6 inline-flex text-sm font-semibold text-blue-600 hover:underline">
+      ← Επιστροφή στα προϊόντα
+    </a>
+
+    @if (isLoading()) {
+      <div class="rounded-2xl bg-white p-10 text-center shadow ring-1 ring-slate-200">
+        <p class="text-slate-500">
+          Φόρτωση προφίλ...
+        </p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="rounded-2xl bg-red-50 p-6 text-center text-red-600 shadow">
+        {{ errorMessage() }}
+      </div>
+    } @else if (currentUser(); as user) {
+      <div class="rounded-3xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
+
+        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 class="text-3xl font-extrabold text-slate-900">
+              Το προφίλ μου
+            </h1>
+
+            <p class="mt-2 text-slate-500">
+              Στοιχεία συνδεδεμένου χρήστη.
+            </p>
+          </div>
+
+          <span
+            class="w-fit rounded-full px-4 py-2 text-sm font-bold"
+            [class.bg-purple-100]="user.role === 'ADMIN'"
+            [class.text-purple-700]="user.role === 'ADMIN'"
+            [class.bg-blue-100]="user.role === 'USER'"
+            [class.text-blue-700]="user.role === 'USER'"
+          >
+            {{ user.role }}
+          </span>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+
+          <div class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-sm font-semibold text-slate-500">
+              Username
+            </p>
+            <p class="mt-1 text-lg font-bold text-slate-900">
+              {{ user.username }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-sm font-semibold text-slate-500">
+              Email
+            </p>
+            <p class="mt-1 text-lg font-bold text-slate-900">
+              {{ user.email }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-sm font-semibold text-slate-500">
+              Όνομα
+            </p>
+            <p class="mt-1 text-lg font-bold text-slate-900">
+              {{ user.firstName }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-sm font-semibold text-slate-500">
+              Επώνυμο
+            </p>
+            <p class="mt-1 text-lg font-bold text-slate-900">
+              {{ user.lastName }}
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            routerLink="/cart"
+            class="flex-1 rounded-xl bg-slate-900 px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-blue-600"
+          >
+            Προβολή καλαθιού
+          </a>
+
+          <button
+            type="button"
+            (click)="logout()"
+            class="flex-1 rounded-xl border border-red-300 px-5 py-3 text-sm font-bold text-red-600 transition hover:bg-red-50"
+          >
+            Αποσύνδεση
+          </button>
+        </div>
+
+      </div>
+    }
+
+  </div>
+</section>

@@ -1,0 +1,87 @@
+<section class="min-h-screen bg-slate-50 px-4 py-12">
+  <div class="mx-auto max-w-md rounded-2xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
+
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-extrabold text-slate-900">
+        Σύνδεση
+      </h1>
+
+      <p class="mt-2 text-sm text-slate-500">
+        Συνδεθείτε στον λογαριασμό σας για να συνεχίσετε.
+      </p>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="mb-5 rounded-xl bg-red-50 p-4 text-sm font-medium text-red-600">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+      <!-- Username -->
+      <div>
+        <label for="username" class="mb-2 block text-sm font-semibold text-slate-700">
+          Username
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="π.χ. dimitris"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [class.border-red-500]="isSubmitted && f.username.errors"
+        />
+
+        @if (isSubmitted && f.username.errors) {
+          <p class="mt-2 text-sm text-red-600">
+            Το username είναι υποχρεωτικό.
+          </p>
+        }
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="mb-2 block text-sm font-semibold text-slate-700">
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Το password σας"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [class.border-red-500]="isSubmitted && f.password.errors"
+        />
+
+        @if (isSubmitted && f.password.errors) {
+          <p class="mt-2 text-sm text-red-600">
+            Το password είναι υποχρεωτικό.
+          </p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="isLoading()"
+        class="w-full rounded-xl bg-slate-900 px-5 py-3 text-base font-bold text-white transition hover:bg-blue-600 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-400"
+      >
+        @if (isLoading()) {
+          Σύνδεση...
+        } @else {
+          Σύνδεση
+        }
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-500">
+      Δεν έχετε λογαριασμό;
+      <a routerLink="/register" class="font-bold text-blue-600 hover:underline">
+        Εγγραφή
+      </a>
+    </p>
+
+  </div>
+</section>
