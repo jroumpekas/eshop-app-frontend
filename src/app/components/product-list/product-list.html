@@ -1,0 +1,35 @@
+<section class="mx-auto max-w-7xl px-4 py-8">
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold text-[var(--text-color)] sm:text-3xl">
+      Προϊόντα
+    </h1>
+
+    <p class="mt-1 text-sm opacity-60">
+      {{ products().length }} προϊόντα διαθέσιμα
+    </p>
+  </header>
+
+  @if (isLoading()) {
+    <p class="py-12 text-center opacity-60">
+      Φόρτωση προϊόντων...
+    </p>
+  } @else if (errorMessage()) {
+    <div class="rounded-xl bg-red-50 p-4 text-center text-red-600">
+      {{ errorMessage() }}
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      @for (product of products(); track product.id) {
+        <app-product-card
+          [product]="product"
+          [showDiscount]="false"
+          (addToCart)="onAddToCart($event)"
+        />
+      } @empty {
+        <p class="col-span-full py-12 text-center opacity-60">
+          Δεν βρέθηκαν προϊόντα.
+        </p>
+      }
+    </div>
+  }
+</section>

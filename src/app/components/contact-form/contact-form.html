@@ -1,0 +1,190 @@
+<section class="min-h-[calc(100vh-90px)] bg-slate-50 px-6 py-12">
+  <div class="mx-auto max-w-3xl rounded-2xl bg-white p-8 shadow-lg md:p-10">
+
+    <!-- Header -->
+    <div class="mb-8 text-center">
+      <h2 class="text-3xl font-bold text-slate-900">
+        Επικοινωνία
+      </h2>
+
+      <p class="mt-3 text-base text-slate-600">
+        Συμπληρώστε τη φόρμα επικοινωνίας και η ομάδα του e-shop θα σας απαντήσει
+        το συντομότερο δυνατό.
+      </p>
+    </div>
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+      <!-- Όνομα -->
+      <div>
+        <label for="name" class="mb-2 block text-sm font-semibold text-slate-700">
+          Ονοματεπώνυμο *
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="π.χ. Γιάννης Παπαδόπουλος"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [ngClass]="{
+            'border-red-500 focus:border-red-500 focus:ring-red-100': isSubmitted && f['name'].errors
+          }"
+        >
+
+        <div *ngIf="isSubmitted && f['name'].errors" class="mt-2 text-sm text-red-600">
+          <small *ngIf="f['name'].errors['required']">
+            Το ονοματεπώνυμο είναι υποχρεωτικό.
+          </small>
+
+          <small *ngIf="f['name'].errors['minlength']">
+            Το ονοματεπώνυμο πρέπει να έχει τουλάχιστον 3 χαρακτήρες.
+          </small>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">
+          E-mail *
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="π.χ. name@example.com"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [ngClass]="{
+            'border-red-500 focus:border-red-500 focus:ring-red-100': isSubmitted && f['email'].errors
+          }"
+        >
+
+        <div *ngIf="isSubmitted && f['email'].errors" class="mt-2 text-sm text-red-600">
+          <small *ngIf="f['email'].errors['required']">
+            Το e-mail είναι υποχρεωτικό.
+          </small>
+
+          <small *ngIf="f['email'].errors['email']">
+            Εισάγετε μια έγκυρη διεύθυνση e-mail.
+          </small>
+        </div>
+      </div>
+
+      <!-- Τηλέφωνο -->
+      <div>
+        <label for="phone" class="mb-2 block text-sm font-semibold text-slate-700">
+          Τηλέφωνο
+        </label>
+
+        <input
+          type="tel"
+          id="phone"
+          formControlName="phone"
+          placeholder="π.χ. 2101234567"
+          class="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+        >
+      </div>
+
+      <!-- Θέμα -->
+      <div>
+        <label for="subject" class="mb-2 block text-sm font-semibold text-slate-700">
+          Θέμα επικοινωνίας *
+        </label>
+
+        <select
+          id="subject"
+          formControlName="subject"
+          class="w-full cursor-pointer rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [ngClass]="{
+            'border-red-500 focus:border-red-500 focus:ring-red-100': isSubmitted && f['subject'].errors
+          }"
+        >
+          <option value="" disabled>Επιλέξτε θέμα...</option>
+          <option value="order">Ερώτηση για παραγγελία</option>
+          <option value="product">Πληροφορίες για προϊόν</option>
+          <option value="account">Πρόβλημα με λογαριασμό</option>
+          <option value="payment">Πληρωμές / Τιμολόγηση</option>
+          <option value="support">Τεχνική υποστήριξη</option>
+          <option value="other">Άλλο</option>
+        </select>
+
+        <div *ngIf="isSubmitted && f['subject'].errors" class="mt-2 text-sm text-red-600">
+          <small *ngIf="f['subject'].errors['required']">
+            Παρακαλώ επιλέξτε θέμα επικοινωνίας.
+          </small>
+        </div>
+      </div>
+
+      <!-- Μήνυμα -->
+      <div>
+        <label for="message" class="mb-2 block text-sm font-semibold text-slate-700">
+          Μήνυμα *
+        </label>
+
+        <textarea
+          id="message"
+          formControlName="message"
+          rows="5"
+          placeholder="Γράψτε εδώ το μήνυμά σας..."
+          class="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+          [ngClass]="{
+            'border-red-500 focus:border-red-500 focus:ring-red-100': isSubmitted && f['message'].errors
+          }"
+        ></textarea>
+
+        <div *ngIf="isSubmitted && f['message'].errors" class="mt-2 text-sm text-red-600">
+          <small *ngIf="f['message'].errors['required']">
+            Το μήνυμα είναι υποχρεωτικό.
+          </small>
+
+          <small *ngIf="f['message'].errors['minlength']">
+            Το μήνυμα πρέπει να έχει τουλάχιστον 10 χαρακτήρες.
+          </small>
+        </div>
+      </div>
+
+      <!-- Checkbox -->
+      <div>
+        <div class="flex items-start gap-3">
+          <input
+            type="checkbox"
+            id="privacy"
+            formControlName="privacy"
+            class="mt-1 h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+            [ngClass]="{
+              'border-red-500': isSubmitted && f['privacy'].errors
+            }"
+          >
+
+          <label for="privacy" class="text-sm leading-6 text-slate-600">
+            Έχω διαβάσει και αποδέχομαι τους
+            <a href="#" class="font-semibold text-blue-600 hover:underline">
+              Όρους Χρήσης
+            </a>
+            και την
+            <a href="#" class="font-semibold text-blue-600 hover:underline">
+              Πολιτική Απορρήτου
+            </a>.
+            *
+          </label>
+        </div>
+
+        <div *ngIf="isSubmitted && f['privacy'].errors" class="mt-2 text-sm text-red-600">
+          <small>
+            Πρέπει να αποδεχτείτε τους όρους για να συνεχίσετε.
+          </small>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="w-full rounded-xl bg-slate-900 px-6 py-3 text-base font-bold text-white transition hover:bg-blue-600 active:scale-[0.99]"
+      >
+        Αποστολή Μηνύματος
+      </button>
+
+    </form>
+  </div>
+</section>

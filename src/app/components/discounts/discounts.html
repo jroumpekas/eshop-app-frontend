@@ -1,0 +1,48 @@
+<section class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 px-4 py-10 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-7xl">
+
+    <!-- Hero -->
+    <div class="mb-10 rounded-3xl bg-white/10 p-8 text-white shadow-2xl ring-1 ring-white/10 backdrop-blur md:p-12">
+      <span class="inline-flex rounded-full bg-red-500 px-5 py-2 text-sm font-extrabold uppercase tracking-wide text-white">
+        Special Offers
+      </span>
+
+      <h1 class="mt-5 text-4xl font-extrabold md:text-5xl">
+        Προσφορές
+      </h1>
+
+      <p class="mt-4 max-w-2xl text-lg text-slate-300">
+        {{ offers().length }} προϊόντα σε έκπτωση για περιορισμένο χρονικό διάστημα.
+      </p>
+
+      <a
+        routerLink="/products"
+        class="mt-6 inline-flex rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-900 transition hover:bg-slate-100"
+      >
+        Δείτε όλα τα προϊόντα
+      </a>
+    </div>
+
+    <!-- Products -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      @for (product of offers(); track product.id) {
+        <app-product-card
+          [product]="product"
+          [showDiscount]="true"
+          (addToCart)="onAddToCart($event)"
+        />
+      } @empty {
+        <div class="col-span-full rounded-2xl bg-white p-10 text-center shadow-xl">
+          <h2 class="text-2xl font-bold text-slate-900">
+            Δεν υπάρχουν διαθέσιμες προσφορές
+          </h2>
+
+          <p class="mt-3 text-slate-500">
+            Ελέγξτε ξανά αργότερα για νέες εκπτώσεις.
+          </p>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

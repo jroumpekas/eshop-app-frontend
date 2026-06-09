@@ -1,0 +1,97 @@
+<article
+  class="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-xl"
+>
+  @if (hasDiscount()) {
+    <div
+      class="absolute left-4 top-4 z-10 rounded-full bg-red-500 px-3 py-1 text-sm font-extrabold text-white shadow-md"
+    >
+      -{{ discountPercent() }}%
+    </div>
+  }
+
+  <!-- Image -->
+  <a
+    [routerLink]="['/products', product.id]"
+    class="mb-5 flex h-48 items-center justify-center rounded-xl"
+    [class.bg-red-50]="hasDiscount()"
+    [class.bg-slate-50]="!hasDiscount()"
+  >
+    @if (product.imageUrl) {
+      <img
+        [src]="product.imageUrl"
+        [alt]="product.name"
+        class="h-full max-h-44 object-contain transition group-hover:scale-105"
+      />
+    } @else {
+      <span class="text-5xl">🛒</span>
+    }
+  </a>
+
+  <div class="flex flex-1 flex-col">
+    <a [routerLink]="['/products', product.id]">
+      <h2 class="text-lg font-bold text-slate-900 transition hover:text-blue-600">
+        {{ product.name }}
+      </h2>
+    </a>
+
+    <p class="mt-2 min-h-12 text-sm text-slate-500">
+      {{ product.description }}
+    </p>
+
+    <div class="mt-5">
+      @if (hasDiscount()) {
+        <div class="flex items-center gap-3">
+          <span class="text-2xl font-extrabold text-red-500">
+            {{ product.price }} €
+          </span>
+
+          <span class="text-sm text-slate-400 line-through">
+            {{ product.oldPrice }} €
+          </span>
+        </div>
+      } @else {
+        <span class="text-2xl font-extrabold text-slate-900">
+          {{ product.price }} €
+        </span>
+      }
+    </div>
+
+    <div class="mt-4">
+      @if (product.stock > 0) {
+        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
+          Σε απόθεμα: {{ product.stock }}
+        </span>
+      } @else {
+        <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">
+          Εξαντλήθηκε
+        </span>
+      }
+    </div>
+
+    <div class="mt-auto pt-6">
+      <a
+        [routerLink]="['/products', product.id]"
+        class="mb-3 flex w-full justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+      >
+        Προβολή προϊόντος
+      </a>
+
+      <button
+        type="button"
+        (click)="onAddToCart()"
+        [disabled]="product.stock === 0"
+        class="w-full rounded-xl px-5 py-3 text-sm font-bold text-white transition active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300"
+        [class.bg-red-500]="hasDiscount()"
+        [class.hover:bg-red-600]="hasDiscount()"
+        [class.bg-slate-900]="!hasDiscount()"
+        [class.hover:bg-blue-600]="!hasDiscount()"
+      >
+        @if (product.stock > 0) {
+          Προσθήκη στο καλάθι
+        } @else {
+          Μη διαθέσιμο
+        }
+      </button>
+    </div>
+  </div>
+</article>
