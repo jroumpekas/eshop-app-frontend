@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { Layout } from '../app/components/layout/layout';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Layout } from './components/layout/layout';
 
 @Component({
   selector: 'app-root',
-  imports: [Layout, MatSlideToggle],
+  imports: [Layout, MatSlideToggleModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
