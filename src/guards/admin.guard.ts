@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
-import { AuthService } from '../app/services/auth';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
+import { catchError, map, Observable, of } from 'rxjs';
+import { AuthService } from '../../src/app/services/auth';
 
-export const adminGuard: CanActivateFn = () => {
+export const adminGuard: CanActivateFn = (): boolean | UrlTree | Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -11,27 +11,28 @@ export const adminGuard: CanActivateFn = () => {
     return router.createUrlTree(['/login']);
   }
 
-  if (authService.isAdmin()) {
-    return true;
-  }
-
   const currentUser = authService.currentUser();
 
-  if (currentUser && currentUser.role !== 'ADMIN') {
-    return router.createUrlTree(['/products']);
+  if (currentUser) {
+    return isAdminRole(currentUser.role)
+      ? true
+      : router.createUrlTree(['/products']);
   }
 
   return authService.loadCurrentUser().pipe(
     map((user) => {
-      if (user.role === 'ADMIN') {
-        return true;
-      }
-
-      return router.createUrlTree(['/products']);
+      return isAdminRole(user.role)
+        ? true
+        : router.createUrlTree(['/products']);
     }),
-    catchError(() => {
+    catchError((error) => {
+      console.error('Admin guard error:', error);
       authService.logout();
       return of(router.createUrlTree(['/login']));
     })
   );
 };
+
+function isAdminRole(role: string | null | undefined): boolean {
+  return role === 'ADMIN' || role === 'ROLE_ADMIN';
+}

@@ -1,6 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Product } from '../models/product';
+
+export interface ProductPayload {
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  imageUrl?: string | null;
+  oldPrice?: number | null;
+  category?: string | null;
+  rating?: number | null;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -39,5 +51,17 @@ export class ProductService {
 
   getById(id: number): Product | undefined {
     return this._products().find((product) => product.id === id);
+  }
+
+  createProduct(payload: ProductPayload): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, payload);
+  }
+
+  updateProduct(id: number, payload: ProductPayload): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, payload);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

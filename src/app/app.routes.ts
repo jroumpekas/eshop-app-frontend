@@ -10,6 +10,8 @@ import { Profile } from './components/profile/profile';
 import { About } from './components/about/about';
 import { authGuard } from '../guards/auth.guard';
 import { MyOrders } from './components/my-orders/my-orders';
+import { AdminProducts } from './components/admin-products/admin-products';
+import { adminGuard } from '../guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -46,12 +48,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
 
-  // Θα το ενεργοποιήσουμε όταν φτιάξουμε admin component
-  // {
-  //   path: 'admin',
-  //   component: Admin,
-  //   canActivate: [adminGuard],
-  // },
+  {
+    path: 'admin/products',
+    component: AdminProducts,
+    canActivate: [adminGuard],
+  },
 
   { path: '**', redirectTo: '' },
 ];
