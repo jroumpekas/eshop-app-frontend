@@ -8,16 +8,43 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Profile } from './components/profile/profile';
 import { About } from './components/about/about';
+import { authGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'products', component: ProductList },
-  { path: 'cart', component: Cart },
   { path: 'discounts', component: Discounts },
+  { path: 'about', component: About },
   { path: 'contact-form', component: ContactForm },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'profile', component: Profile },
-  { path: 'about', component: About},
+
+  {
+    path: 'cart',
+    component: Cart,
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'profile',
+    component: Profile,
+    canActivate: [authGuard],
+  },
+
+  {
+    path: 'login',
+    component: Login,
+  },
+
+  {
+    path: 'register',
+    component: Register,
+  },
+
+  // Θα το ενεργοποιήσουμε όταν φτιάξουμε admin component
+  // {
+  //   path: 'admin',
+  //   component: Admin,
+  //   canActivate: [adminGuard],
+  // },
+
   { path: '**', redirectTo: '' },
 ];
