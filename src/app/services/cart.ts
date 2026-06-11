@@ -6,6 +6,12 @@ const STORAGE_KEY = 'fullmarket_cart';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
+  removeFromCart(productId: number) {
+    throw new Error('Method not implemented.');
+  }
+  clearCart() {
+    throw new Error('Method not implemented.');
+  }
   private readonly _items = signal<CartItem[]>(this.loadFromStorage());
 
   // Δημόσιο read-only state + παράγωγα signals

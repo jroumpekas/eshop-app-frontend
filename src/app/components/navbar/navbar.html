@@ -64,6 +64,18 @@
         Login
       </a>
 
+      @if (authService.isLoggedIn()) {
+      <a routerLink="/cart" routerLinkActive="text-blue-600"
+        class="text-sm font-semibold text-slate-700 transition hover:text-blue-600">
+        Καλάθι
+      </a>
+
+      <a routerLink="/orders" routerLinkActive="text-blue-600"
+        class="text-sm font-semibold text-slate-700 transition hover:text-blue-600">
+        Παραγγελίες
+      </a>
+      }
+
       <a routerLink="/register"
         class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-600 active:scale-[0.98]">
         Register

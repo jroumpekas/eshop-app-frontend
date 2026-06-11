@@ -9,6 +9,7 @@ import { Register } from './components/register/register';
 import { Profile } from './components/profile/profile';
 import { About } from './components/about/about';
 import { authGuard } from '../guards/auth.guard';
+import { MyOrders } from './components/my-orders/my-orders';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -37,6 +38,12 @@ export const routes: Routes = [
   {
     path: 'register',
     component: Register,
+  },
+
+  {
+    path: 'orders',
+    component: MyOrders,
+    canActivate: [authGuard],
   },
 
   // Θα το ενεργοποιήσουμε όταν φτιάξουμε admin component
