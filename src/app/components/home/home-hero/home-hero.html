@@ -1,0 +1,36 @@
+<section class="relative min-h-[520px] overflow-hidden rounded-3xl shadow-xl">
+  <!-- Background image -->
+  <img src="/home/hero-bg.webp.jpg" alt="Tech products background"
+    class="absolute inset-0 h-full w-full object-cover" />
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/35"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex min-h-[520px] items-center px-8 py-20 text-white md:px-12">
+    <div class="max-w-2xl">
+      <p class="mb-3 text-sm font-bold uppercase tracking-wide text-blue-200">
+        Welcome to E-Shop
+      </p>
+
+      <h1 class="text-4xl font-extrabold leading-tight md:text-6xl">
+        Βρες τα αγαπημένα σου tech προϊόντα
+      </h1>
+
+      <p class="mt-5 text-lg text-white/90">
+        Ανακάλυψε προϊόντα τεχνολογίας, προσφορές και ολοκλήρωσε την παραγγελία σου εύκολα και γρήγορα.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a routerLink="/products"
+          class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-blue-700">
+          Δες προϊόντα
+        </a>
+
+        <a routerLink="/discounts"
+          class="rounded-xl border border-white/40 bg-white/10 px-6 py-3 text-sm font-bold text-white backdrop-blur transition hover:bg-white/20">
+          Προσφορές
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
