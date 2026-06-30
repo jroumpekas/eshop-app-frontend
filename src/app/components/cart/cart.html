@@ -1,96 +1,199 @@
-<section class="mx-auto max-w-4xl px-4 py-8 text-(--text-color)">
-  <h1 class="mb-6 text-2xl font-bold sm:text-3xl">Καλάθι</h1>
+<section
+  class="min-h-screen bg-cover bg-center bg-fixed px-4 py-10 text-(--text-color)"
+  style="background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/assets/images/home-bg.jpg');">
 
-  @if (cart.isEmpty()) {
-    <div class="rounded-xl border border-(--border-color) bg-(--card-bg) p-10 text-center">
-      <p class="mb-4 opacity-70">Το καλάθι σου είναι άδειο.</p>
-      <a routerLink="/products"
-         class="inline-block rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">
-      </a>
+  <div class="mx-auto max-w-6xl">
+
+    <!-- Header -->
+    <div class="mb-8 rounded-2xl border border-white/20 bg-white/80 p-6 shadow-sm backdrop-blur-md dark:bg-slate-900/80">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white">
+            Το καλάθι μου
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            Επεξεργασία προϊόντων, ποσότητας και συνολικού κόστους.
+          </p>
+        </div>
+
+        @if (!cartService.isEmpty()) {
+          <button
+            type="button"
+            (click)="clearCart()"
+            class="rounded-xl border border-red-300 bg-white/70 px-4 py-2 text-sm font-bold text-red-600 transition hover:bg-red-50 dark:bg-slate-800/80 dark:hover:bg-red-950/30">
+            Άδειασμα καλαθιού
+          </button>
+        }
+      </div>
     </div>
-  } @else {
-    <ul class="flex flex-col gap-4">
-      @for (item of cart.items(); track item.product.id) {
-        <li class="flex items-center gap-4 rounded-xl border border-(--border-color) bg-(--card-bg) p-3 sm:p-4">
-          <!-- Εικόνα -->
-          <div class="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-white">
-            <img
-              [src]="item.product.imageUrl || 'https://picsum.photos/seed/product-' + item.product.id + '/200/200'"
-              [alt]="item.product.name"
-              class="h-full w-full object-contain p-1"
-            />
+
+    <!-- Empty Cart -->
+    @if (cartService.isEmpty()) {
+      <div class="rounded-2xl border border-white/20 bg-white/85 p-10 text-center shadow-sm backdrop-blur-md dark:bg-slate-900/85">
+        <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9 2 9M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm8 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+          </svg>
+        </div>
+
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+          Το καλάθι σου είναι άδειο.
+        </h2>
+
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+          Πρόσθεσε προϊόντα για να εμφανιστούν εδώ.
+        </p>
+
+        <a
+          routerLink="/products"
+          class="mt-6 inline-flex rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-600 active:scale-[0.98]">
+          Συνέχεια στα προϊόντα
+        </a>
+      </div>
+    } @else {
+
+      <!-- Cart Items + Summary -->
+      <div class="grid gap-6 lg:grid-cols-[1fr_360px]">
+
+        <!-- Items -->
+        <div class="space-y-4">
+          @for (item of cartService.cartItems(); track item.product.id) {
+            <article
+              class="flex flex-col gap-5 rounded-2xl border border-white/20 bg-white/85 p-5 shadow-sm backdrop-blur-md transition hover:shadow-lg dark:bg-slate-900/85 md:flex-row md:items-center">
+
+              <!-- Product Image -->
+              <div class="flex h-28 w-full items-center justify-center overflow-hidden rounded-xl bg-slate-100 md:w-32 dark:bg-slate-800">
+                @if (item.product.imageUrl) {
+                  <img
+                    [src]="item.product.imageUrl"
+                    [alt]="item.product.name"
+                    class="h-full w-full object-cover">
+                } @else {
+                  <span class="text-sm font-semibold text-slate-400">
+                    No image
+                  </span>
+                }
+              </div>
+
+              <!-- Product Info -->
+              <div class="flex-1">
+                <h2 class="text-lg font-extrabold text-slate-900 dark:text-white">
+                  {{ item.product.name }}
+                </h2>
+
+                <p class="mt-1 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
+                  {{ item.product.description }}
+                </p>
+
+                <div class="mt-3 flex flex-wrap gap-3 text-sm">
+                  <span class="font-bold text-slate-900 dark:text-white">
+                    Τιμή:
+                    {{ item.product.price | currency:'EUR':'symbol':'1.2-2' }}
+                  </span>
+
+                  <span class="text-slate-500 dark:text-slate-400">
+                    Stock: {{ item.product.stock }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Quantity Controls -->
+              <div class="flex items-center justify-between gap-4 md:flex-col md:items-end">
+
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    (click)="decrease(item.product.id)"
+                    class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white/70 text-lg font-bold text-slate-900 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700">
+                    -
+                  </button>
+
+                  <span class="min-w-8 text-center text-base font-extrabold text-slate-900 dark:text-white">
+                    {{ item.quantity }}
+                  </span>
+
+                  <button
+                    type="button"
+                    (click)="increase(item.product.id)"
+                    [disabled]="item.quantity >= item.product.stock"
+                    class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white/70 text-lg font-bold text-slate-900 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700">
+                    +
+                  </button>
+                </div>
+
+                <div class="text-right">
+                  <p class="text-lg font-extrabold text-slate-900 dark:text-white">
+                    {{ item.product.price * item.quantity | currency:'EUR':'symbol':'1.2-2' }}
+                  </p>
+
+                  <button
+                    type="button"
+                    (click)="remove(item.product.id)"
+                    class="mt-2 text-sm font-bold text-red-500 transition hover:text-red-600 hover:underline">
+                    Αφαίρεση
+                  </button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+
+        <!-- Summary -->
+        <aside
+          class="h-fit rounded-2xl border border-white/20 bg-white/85 p-6 shadow-sm backdrop-blur-md dark:bg-slate-900/85">
+
+          <h2 class="mb-5 text-xl font-extrabold text-slate-900 dark:text-white">
+            Σύνοψη παραγγελίας
+          </h2>
+
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-600 dark:text-slate-300">Σύνολο τεμαχίων</span>
+              <span class="font-bold text-slate-900 dark:text-white">
+                {{ cartService.totalItems() }}
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="text-slate-600 dark:text-slate-300">Προϊόντα</span>
+              <span class="font-bold text-slate-900 dark:text-white">
+                {{ cartService.cartItems().length }}
+              </span>
+            </div>
+
+            <div class="border-t border-slate-200 pt-4 dark:border-slate-700">
+              <div class="flex items-center justify-between text-lg">
+                <span class="font-extrabold text-slate-900 dark:text-white">Τελικό σύνολο</span>
+                <span class="font-extrabold text-slate-900 dark:text-white">
+                  {{ cartService.totalPrice() | currency:'EUR':'symbol':'1.2-2' }}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <!-- Όνομα + τιμή μονάδας -->
-          <div class="min-w-0 flex-1">
-            <h3 class="truncate font-semibold">{{ item.product.name }}</h3>
-            <p class="text-sm opacity-60">{{ formatPrice(item.product.price) }} / τεμ.</p>
-          </div>
+          <button
+            type="button"
+            class="mt-6 w-full rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-600 active:scale-[0.98]">
+            Ολοκλήρωση παραγγελίας
+          </button>
 
-          <!-- Ποσότητα -->
-          <div class="flex items-center gap-2">
-            <button type="button" (click)="decrement(item)" aria-label="Μείωση"
-                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-(--border-color) text-lg leading-none transition hover:bg-black/5 dark:hover:bg-white/10">−</button>
-            <span class="w-6 text-center font-medium">{{ item.quantity }}</span>
-            <button type="button" (click)="increment(item)" [disabled]="item.quantity >= item.product.stock" aria-label="Αύξηση"
-                    class="flex h-8 w-8 items-center justify-center rounded-lg border border-(--border-color) text-lg leading-none transition hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10">+</button>
-          </div>
-
-          <!-- Σύνολο γραμμής -->
-          <div class="w-24 shrink-0 text-right font-bold text-brand">
-            {{ formatPrice(item.product.price * item.quantity) }}
-          </div>
-
-          <!-- Διαγραφή -->
-          <button type="button" (click)="remove(item.product.id)" aria-label="Αφαίρεση"
-                  class="shrink-0 rounded-lg p-2 text-sm opacity-60 transition hover:text-brand hover:opacity-100">✕</button>
-        </li>
-      }
-    </ul>
-
-    <!-- Σύνοψη -->
-    <div class="mt-6 flex flex-col items-end gap-4 border-t border-(--border-color) pt-6">
-  <div class="flex w-full items-center justify-between sm:w-auto sm:gap-12">
-    <span class="text-lg font-medium opacity-70">Σύνολο</span>
-    <span class="text-2xl font-bold text-brand">
-      {{ formatPrice(cart.totalPrice()) }}
-    </span>
+          <a
+            routerLink="/products"
+            class="mt-3 flex w-full justify-center rounded-xl border border-slate-300 bg-white/70 px-5 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700">
+            Συνέχεια αγορών
+          </a>
+        </aside>
+      </div>
+    }
   </div>
-
-  @if (checkoutError()) {
-    <div class="w-full rounded-xl bg-red-50 p-4 text-sm font-semibold text-red-600 sm:w-auto">
-      {{ checkoutError() }}
-    </div>
-  }
-
-  @if (checkoutSuccess()) {
-    <div class="w-full rounded-xl bg-green-50 p-4 text-sm font-semibold text-green-700 sm:w-auto">
-      {{ checkoutSuccess() }}
-    </div>
-  }
-
-  <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-    <button
-      type="button"
-      (click)="clear()"
-      class="rounded-lg border border-(--border-color) px-5 py-2.5 text-sm font-semibold transition hover:bg-black/5 dark:hover:bg-white/10"
-    >
-      Άδειασμα καλαθιού
-    </button>
-
-    <button
-      type="button"
-      (click)="checkout()"
-      [disabled]="isCheckingOut() || cart.items().length === 0"
-      class="rounded-lg bg-brand px-6 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-    >
-      @if (isCheckingOut()) {
-        Ολοκλήρωση...
-      } @else {
-        Ολοκλήρωση παραγγελίας
-      }
-    </button>
-  </div>
-</div>
-  }
 </section>
