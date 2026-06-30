@@ -69,6 +69,7 @@
         class="w-full rounded-xl px-5 py-3 text-sm font-bold text-white transition active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-slate-300"
         [class.bg-red-500]="hasDiscount()" [class.hover:bg-red-600]="hasDiscount()"
         [class.bg-slate-900]="!hasDiscount()" [class.hover:bg-blue-600]="!hasDiscount()">
+
         @if (product.stock > 0) {
         Προσθήκη στο καλάθι
         } @else {

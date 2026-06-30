@@ -12,12 +12,12 @@
       <div class="grid gap-8 rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200 md:grid-cols-2 md:p-10">
 
         <!-- Image -->
-        <div class="flex min-h-[420px] items-center justify-center rounded-2xl bg-slate-100 p-8">
+        <div class="flex min-h-105 items-center justify-center rounded-2xl bg-slate-100 p-8">
           @if (product.imageUrl) {
             <img
               [src]="product.imageUrl"
               [alt]="product.name"
-              class="max-h-[360px] object-contain"
+              class="max-h-90 object-contain"
             />
           } @else {
             <span class="text-7xl">🛒</span>

@@ -4,6 +4,7 @@ import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-card',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
@@ -17,6 +18,7 @@ export class ProductCard {
   onAddToCart(): void {
     this.addToCart.emit(this.product);
   }
+  
 
   hasDiscount(): boolean {
     return (

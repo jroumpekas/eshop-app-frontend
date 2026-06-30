@@ -6,6 +6,7 @@ import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-details',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',
@@ -17,10 +18,12 @@ export class ProductDetails {
 
   private readonly productId = Number(this.route.snapshot.paramMap.get('id'));
 
-  readonly product = computed(() => this.productService.getById(this.productId));
+  readonly product = computed(() =>
+    this.productService.getById(this.productId)
+  );
 
   onAddToCart(product: Product): void {
-    this.cart.add(product);
+    this.cart.addToCart(product);
   }
 
   hasDiscount(product: Product): boolean {
@@ -28,10 +31,10 @@ export class ProductDetails {
   }
 
   discountPercent(product: Product): number {
-    if (!product.oldPrice || product.oldPrice <= product.price) {
+    if (!this.hasDiscount(product)) {
       return 0;
     }
 
-    return Math.round((1 - product.price / product.oldPrice) * 100);
+    return Math.round((1 - product.price / product.oldPrice!) * 100);
   }
 }
