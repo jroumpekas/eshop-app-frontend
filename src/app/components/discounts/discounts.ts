@@ -22,7 +22,7 @@ export class Discounts {
   );
 
   onAddToCart(product: Product): void {
-    this.cart.add(product);
+    this.cart.addToCart(product);
   }
 
   discountPercent(product: Product): number {

@@ -19,6 +19,6 @@ export class ProductList {
   readonly errorMessage = this.productService.errorMessage;
 
   onAddToCart(product: Product): void {
-    this.cart.add(product);
+    this.cart.addToCart(product);
   }
 }
