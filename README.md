@@ -1,80 +1,114 @@
 # E-Shop Frontend
 
-A modern frontend application for a full-stack e-shop platform, built with **Angular**, **TypeScript**, and **Tailwind CSS**.
+A modern and responsive frontend application for a full-stack e-commerce platform, built with **Angular**, **TypeScript**, and **Tailwind CSS**.
 
-This project is the client-side part of a full-stack e-commerce application and communicates with a Spring Boot backend API.
+This project represents the client-side part of a full-stack e-shop portfolio application. It communicates with a Spring Boot backend API and provides a complete shopping experience, including product browsing, authentication, cart management, checkout, and order history.
 
-## Overview
+## Related Repository
 
-The application provides a complete e-shop user interface, including product browsing, discount products, cart management, authentication, user profile, checkout flow, and order history.
-
-It is designed to work together with the backend repository:
+Backend repository:
 
 ```text
 https://github.com/jroumpekas/eshop-springboot-backend
 ```
 
+---
+
+## Overview
+
+The E-Shop Frontend is designed as a realistic e-commerce user interface connected to a backend REST API.
+
+The application supports:
+
+- Product browsing
+- Product details
+- Discount products
+- User authentication
+- JWT-based protected requests
+- Cart management
+- Checkout flow
+- Order history
+- User profile
+- Responsive layout
+
+The goal of this project is to demonstrate a complete frontend workflow for a real-world full-stack application.
+
+---
+
 ## Tech Stack
 
-* Angular
-* TypeScript
-* Angular Router
-* Angular Reactive Forms
-* Angular Signals
-* RxJS
-* Tailwind CSS
-* JWT Authentication
-* REST API integration
+- Angular
+- TypeScript
+- Angular Router
+- Angular Reactive Forms
+- Angular Signals
+- RxJS
+- Tailwind CSS
+- JWT Authentication
+- REST API integration
+
+---
 
 ## Features
 
 ### Product Browsing
 
-* Product listing page
-* Product details page
-* Product cards with image, price, stock, and discount information
-* Discount products page
-* Product images and offer data loaded from the backend
+- Product listing page
+- Product details page
+- Product cards with image, price, stock, category, and discount information
+- Discount products page
+- Product data loaded from the backend API
+- Support for product offer information
 
 ### Authentication
 
-* User login
-* User registration
-* JWT token storage
-* Authenticated user profile
-* Logout functionality
-* Route guards for protected pages
-* Auth interceptor for protected API requests
+- User login
+- User registration
+- JWT token storage
+- Authenticated user profile
+- Logout functionality
+- Dynamic navbar state based on authentication
+- Route guards for protected pages
+- HTTP interceptor for protected API requests
 
 ### Cart & Checkout
 
-* Add products to cart
-* Increase or decrease product quantities
-* Remove products from cart
-* Clear cart
-* Checkout flow connected with the backend
-* Order creation through the backend API
-* Automatic cart clearing after successful checkout
+- Add products to cart
+- Increase and decrease product quantities
+- Remove products from cart
+- Clear cart
+- Cart total calculation
+- Checkout flow connected with the backend
+- Order creation through the backend API
+- Automatic cart clearing after successful checkout
+- Redirect to order history after checkout completion
 
 ### Orders
 
-* My Orders page
-* Display of completed orders
-* Order items, quantities, prices, total amount, and status
+- My Orders page
+- Display of completed orders
+- Order items with quantities and prices
+- Total order amount
+- Order status display
 
 ### Navigation & Layout
 
-* Responsive navbar
-* Dynamic navbar state based on authentication
-* About page
-* Contact page
-* Clean component-based structure
+- Responsive navbar
+- Home page
+- About page
+- Contact page
+- Discounts page
+- Profile page
+- Clean component-based structure
+- Tailwind-based responsive styling
+
+---
 
 ## Project Structure
 
 ```text
 src/app
-├── components        # UI components and pages
+├── components
 │   ├── about
 │   ├── cart
 │   ├── contact-form
@@ -90,14 +124,16 @@ src/app
 │   ├── product-list
 │   ├── profile
 │   └── register
-├── guards            # Route guards
-├── interceptors      # HTTP interceptors
-├── models            # TypeScript interfaces
-├── services          # API and state services
+├── guards
+├── interceptors
+├── models
+├── services
 ├── app.config.ts
 ├── app.routes.ts
 └── app.ts
 ```
+
+---
 
 ## Backend Integration
 
@@ -107,10 +143,11 @@ The frontend communicates with a Spring Boot backend running locally on:
 http://localhost:8080
 ```
 
-Main backend API areas used by the frontend:
+Main backend API endpoints used by the frontend:
 
 ```http
 GET  /api/products
+GET  /api/products/{id}
 POST /api/auth/login
 POST /api/auth/register
 GET  /api/users/me
@@ -118,18 +155,23 @@ POST /api/orders/checkout
 GET  /api/orders/my-orders
 ```
 
-Protected requests use a JWT token through an HTTP interceptor.
+Protected API requests use a JWT token through an Angular HTTP interceptor.
+
+---
 
 ## Authentication Flow
 
 The authentication flow works as follows:
 
 1. The user logs in through the Angular login page.
-2. The backend returns a JWT token.
-3. The token is stored locally.
-4. The Angular interceptor attaches the token to protected API requests.
-5. Protected routes are handled through Angular route guards.
-6. The current user is loaded from the backend through `/api/users/me`.
+2. The backend validates the credentials.
+3. The backend returns a JWT token.
+4. The token is stored locally on the frontend.
+5. The Angular HTTP interceptor attaches the token to protected API requests.
+6. Route guards protect pages that require authentication.
+7. The current user is loaded from the backend through `/api/users/me`.
+
+---
 
 ## Checkout Flow
 
@@ -137,21 +179,25 @@ The checkout flow works as follows:
 
 1. The user adds products to the cart.
 2. The cart stores selected products and quantities.
-3. The user completes the order from the cart page.
-4. The frontend sends the checkout request to the backend.
+3. The user reviews the cart.
+4. The frontend sends a checkout request to the backend.
 5. The backend creates the order and order items.
-6. The frontend clears the cart.
+6. The frontend clears the cart after a successful checkout.
 7. The user is redirected to the My Orders page.
+
+---
 
 ## Prerequisites
 
 Before running the frontend locally, make sure you have installed:
 
-* Node.js
-* npm
-* Angular CLI
+- Node.js
+- npm
+- Angular CLI
 
 The backend application should also be running locally on port `8080`.
+
+---
 
 ## Installation
 
@@ -173,6 +219,8 @@ Install dependencies:
 npm install
 ```
 
+---
+
 ## Running the Application
 
 Start the Angular development server:
@@ -187,6 +235,14 @@ The application will be available at:
 http://localhost:4200
 ```
 
+Make sure that the backend application is also running at:
+
+```text
+http://localhost:8080
+```
+
+---
+
 ## Build
 
 To build the project:
@@ -197,57 +253,61 @@ ng build
 
 The production build output will be generated in the `dist/` directory.
 
-## Development Notes
-
-The frontend currently expects the backend API to be available at:
-
-```text
-http://localhost:8080
-```
-
-Future improvement:
-
-* Move the API base URL into Angular environment configuration files.
-* Add admin product management pages.
-* Improve error handling and loading states.
-* Add more automated tests.
-* Improve responsive UI details.
-* Add deployment configuration.
+---
 
 ## Current Status
 
 Completed:
 
-* Angular project setup
-* Product list
-* Product details
-* Discounts page
-* Cart functionality
-* Login and register pages
-* User profile page
-* JWT auth interceptor
-* Auth route guards
-* Checkout flow
-* My Orders page
-* Backend product data integration
-* Backend order integration
+- Angular project setup
+- Responsive layout and navigation
+- Product list page
+- Product details page
+- Discounts page
+- Cart functionality
+- Login and register pages
+- User profile page
+- JWT authentication flow
+- Auth interceptor
+- Auth route guards
+- Checkout flow
+- My Orders page
+- Backend product data integration
+- Backend order integration
 
-Planned improvements:
+---
 
-* Admin product management
-* Environment-based API configuration
-* Better form validation messages
-* More complete testing
-* Deployment setup
+## Planned Improvements
 
-## Related Repository
+Future improvements may include:
 
-Backend repository:
+- Admin product management pages
+- Environment-based API configuration
+- Improved loading and error states
+- More detailed form validation messages
+- Toast notifications
+- More automated tests
+- Further responsive UI refinements
+- Deployment configuration
 
-```text
-https://github.com/jroumpekas/eshop-springboot-backend
-```
+---
+
+## Portfolio Purpose
+
+This project was built as part of a full-stack portfolio application.
+
+It demonstrates:
+
+- Angular component-based architecture
+- REST API integration
+- Authentication and authorization handling on the frontend
+- JWT-based protected requests
+- State handling for cart and authentication flows
+- User-facing e-commerce workflows
+- Integration with a Spring Boot backend
+
+---
 
 ## Author
 
-Created by Dimitris Roumpékas as part of a full-stack e-shop portfolio project.
+Created by **Dimitris Roumpekas** as part of a full-stack e-shop portfolio project.
