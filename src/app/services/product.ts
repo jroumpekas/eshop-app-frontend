@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
+import { environment } from '../../environment/environment';
 
 export interface ProductPayload {
   name: string;
@@ -18,7 +19,7 @@ export interface ProductPayload {
 export class ProductService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:8080/api/products';
+  readonly apiUrl = `${environment.apiUrl}/products`;
 
   private readonly _products = signal<Product[]>([]);
   private readonly _isLoading = signal(false);

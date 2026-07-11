@@ -5,6 +5,7 @@ import { LoginRequest } from '../models/login-request';
 import { RegisterRequest } from '../models/register-request';
 import { AuthResponse } from '../models/auth-response';
 import { CurrentUser } from '../models/current-user';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import { CurrentUser } from '../models/current-user';
 export class AuthService {
   private readonly http = inject(HttpClient);
 
-  private readonly authApiUrl = 'http://localhost:8080/api/auth';
-  private readonly usersApiUrl = 'http://localhost:8080/api/users';
+readonly authApiUrl = `${environment.apiUrl}/auth`;
+readonly usersApiUrl = `${environment.apiUrl}/users`;
 
   private readonly _token = signal<string | null>(localStorage.getItem('token'));
   private readonly _currentUser = signal<CurrentUser | null>(null);
