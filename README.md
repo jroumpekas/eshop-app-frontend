@@ -1,16 +1,30 @@
 # E-Shop Frontend
 
-A modern and responsive frontend application for a full-stack e-commerce platform, built with **Angular**, **TypeScript**, and **Tailwind CSS**.
+Modern and responsive frontend application for a full-stack e-commerce platform, built with **Angular**, **TypeScript**, and **Tailwind CSS**.
 
-This project represents the client-side part of a full-stack e-shop portfolio application. It communicates with a Spring Boot backend API and provides a complete shopping experience, including product browsing, authentication, cart management, checkout, and order history.
+This project is the client-side part of a full-stack e-shop portfolio application. It communicates with a Spring Boot backend API and provides a shopping experience that includes product browsing, authentication, cart management, checkout, and order history.
 
-## Related Repository
+---
 
-Backend repository:
+## Table of Contents
 
-```text
-https://github.com/jroumpekas/eshop-springboot-backend
-```
+- [Overview](#overview)
+- [Related Repository](#related-repository)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Backend Integration](#backend-integration)
+- [Environment Configuration](#environment-configuration)
+- [Authentication Flow](#authentication-flow)
+- [Checkout Flow](#checkout-flow)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [Build](#build)
+- [Current Status](#current-status)
+- [Planned Improvements](#planned-improvements)
+- [Portfolio Purpose](#portfolio-purpose)
+- [Author](#author)
 
 ---
 
@@ -23,8 +37,11 @@ The application supports:
 - Product browsing
 - Product details
 - Discount products
-- User authentication
-- JWT-based protected requests
+- User login and registration
+- JWT-based protected API requests
+- Dynamic authentication state
+- Protected routes
+- Admin-only frontend route protection
 - Cart management
 - Checkout flow
 - Order history
@@ -32,6 +49,16 @@ The application supports:
 - Responsive layout
 
 The goal of this project is to demonstrate a complete frontend workflow for a real-world full-stack application.
+
+---
+
+## Related Repository
+
+Backend repository:
+
+```text
+https://github.com/jroumpekas/eshop-springboot-backend
+```
 
 ---
 
@@ -46,6 +73,8 @@ The goal of this project is to demonstrate a complete frontend workflow for a re
 - Tailwind CSS
 - JWT Authentication
 - REST API integration
+- Angular HTTP Interceptor
+- Angular Route Guards
 
 ---
 
@@ -55,7 +84,7 @@ The goal of this project is to demonstrate a complete frontend workflow for a re
 
 - Product listing page
 - Product details page
-- Product cards with image, price, stock, category, and discount information
+- Product cards with image, price, stock, category, rating, and discount information
 - Discount products page
 - Product data loaded from the backend API
 - Support for product offer information
@@ -69,9 +98,10 @@ The goal of this project is to demonstrate a complete frontend workflow for a re
 - Logout functionality
 - Dynamic navbar state based on authentication
 - Route guards for protected pages
+- Admin guard for admin-only pages
 - HTTP interceptor for protected API requests
 
-### Cart & Checkout
+### Cart and Checkout
 
 - Add products to cart
 - Increase and decrease product quantities
@@ -91,7 +121,7 @@ The goal of this project is to demonstrate a complete frontend workflow for a re
 - Total order amount
 - Order status display
 
-### Navigation & Layout
+### Navigation and Layout
 
 - Responsive navbar
 - Home page
@@ -101,6 +131,12 @@ The goal of this project is to demonstrate a complete frontend workflow for a re
 - Profile page
 - Clean component-based structure
 - Tailwind-based responsive styling
+
+### Backend API Configuration
+
+- Backend URL configured through Angular environment file
+- Services use `environment.apiUrl` instead of hardcoded backend URLs
+- Easier transition from local development to deployment
 
 ---
 
@@ -133,14 +169,22 @@ src/app
 └── app.ts
 ```
 
+Environment files are located in:
+
+```text
+src/environments
+```
+
 ---
 
 ## Backend Integration
 
-The frontend communicates with a Spring Boot backend running locally on:
+The frontend communicates with a Spring Boot backend API.
+
+Default backend development URL:
 
 ```text
-http://localhost:8080
+http://localhost:8080/api
 ```
 
 Main backend API endpoints used by the frontend:
@@ -159,6 +203,35 @@ Protected API requests use a JWT token through an Angular HTTP interceptor.
 
 ---
 
+## Environment Configuration
+
+The frontend uses Angular environment configuration for the backend API URL.
+
+Example:
+
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api'
+};
+```
+
+Services build API URLs from `environment.apiUrl`, for example:
+
+```ts
+readonly apiUrl = `${environment.apiUrl}/products`;
+```
+
+This avoids hardcoded backend URLs inside Angular services and makes the application easier to configure for different environments.
+
+Before running the frontend, check the backend API URL in:
+
+```text
+src/environments/environment.ts
+```
+
+---
+
 ## Authentication Flow
 
 The authentication flow works as follows:
@@ -170,6 +243,7 @@ The authentication flow works as follows:
 5. The Angular HTTP interceptor attaches the token to protected API requests.
 6. Route guards protect pages that require authentication.
 7. The current user is loaded from the backend through `/api/users/me`.
+8. The navbar updates based on authentication state.
 
 ---
 
@@ -235,10 +309,10 @@ The application will be available at:
 http://localhost:4200
 ```
 
-Make sure that the backend application is also running at:
+Make sure that the backend application is also running and that the API URL is configured in:
 
 ```text
-http://localhost:8080
+src/environments/environment.ts
 ```
 
 ---
@@ -270,10 +344,12 @@ Completed:
 - JWT authentication flow
 - Auth interceptor
 - Auth route guards
+- Admin route guard
 - Checkout flow
 - My Orders page
 - Backend product data integration
 - Backend order integration
+- Environment-based backend API URL configuration
 
 ---
 
@@ -282,10 +358,11 @@ Completed:
 Future improvements may include:
 
 - Admin product management pages
-- Environment-based API configuration
-- Improved loading and error states
+- Improved loading states
+- Improved error states
 - More detailed form validation messages
 - Toast notifications
+- Product search and filtering UI
 - More automated tests
 - Further responsive UI refinements
 - Deployment configuration
@@ -305,9 +382,10 @@ It demonstrates:
 - State handling for cart and authentication flows
 - User-facing e-commerce workflows
 - Integration with a Spring Boot backend
+- Environment-based API configuration
 
 ---
 
 ## Author
 
-Created by **Dimitris Roumpekas** as part of a full-stack e-shop portfolio project.
+Created by Dimitris Roumpekas as part of a full-stack e-shop portfolio project.
