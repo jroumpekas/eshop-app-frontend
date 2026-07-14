@@ -15,6 +15,7 @@ export class AuthService {
 
 readonly authApiUrl = `${environment.apiUrl}/auth`;
 readonly usersApiUrl = `${environment.apiUrl}/users`;
+readonly apiUrl = `${environment.apiUrl}/products`;
 
   private readonly _token = signal<string | null>(localStorage.getItem('token'));
   private readonly _currentUser = signal<CurrentUser | null>(null);

@@ -1,11 +1,11 @@
 <section class="mx-auto max-w-7xl px-4 py-8">
   <header class="mb-6">
-    <h1 class="text-2xl font-bold text-[var(--text-color)] sm:text-3xl">
+    <h1 class="text-2xl font-bold text-(--text-color) sm:text-3xl">
       Προϊόντα
     </h1>
 
     <p class="mt-1 text-sm opacity-60">
-      {{ products().length }} προϊόντα διαθέσιμα
+      {{ totalElements }} προϊόντα διαθέσιμα
     </p>
   </header>
 
@@ -31,5 +31,31 @@
         </p>
       }
     </div>
+
+    @if (totalPages > 1) {
+      <div class="mt-8 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+          [disabled]="currentPage === 0"
+          (click)="previousPage()"
+        >
+          Προηγούμενη
+        </button>
+
+        <span class="text-sm text-(--text-color) opacity-70">
+          Σελίδα {{ currentPage + 1 }} από {{ totalPages }}
+        </span>
+
+        <button
+          type="button"
+          class="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+          [disabled]="currentPage >= totalPages - 1"
+          (click)="nextPage()"
+        >
+          Επόμενη
+        </button>
+      </div>
+    }
   }
 </section>

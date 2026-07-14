@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Product } from '../models/product';
+import { PageResponse, Product } from '../models/product';
 import { environment } from '../../environment/environment';
 
 export interface ProductPayload {
@@ -65,4 +65,10 @@ export class ProductService {
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getPaginatedProducts(page: number = 0, size: number = 3, sort: string = 'name') {
+  return this.http.get<PageResponse<Product>>(
+    `${this.apiUrl}/paged?page=${page}&size=${size}&sort=${sort}`
+  );
+}
 }
