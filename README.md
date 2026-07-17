@@ -2,7 +2,7 @@
 
 Modern and responsive frontend application for a full-stack e-commerce platform, built with **Angular**, **TypeScript**, and **Tailwind CSS**.
 
-This project is the client-side part of a full-stack e-shop portfolio application. It communicates with a Spring Boot backend API and provides a shopping experience that includes product browsing, authentication, cart management, checkout, and order history.
+This project is the client-side part of a full-stack e-shop portfolio application. It communicates with a Spring Boot backend API and provides a shopping experience that includes product browsing, pagination, authentication, cart management, checkout, and order history.
 
 ---
 
@@ -17,10 +17,12 @@ This project is the client-side part of a full-stack e-shop portfolio applicatio
 - [Environment Configuration](#environment-configuration)
 - [Authentication Flow](#authentication-flow)
 - [Checkout Flow](#checkout-flow)
+- [Product Pagination](#product-pagination)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [Build](#build)
+- [Deployment](#deployment)
 - [Current Status](#current-status)
 - [Planned Improvements](#planned-improvements)
 - [Portfolio Purpose](#portfolio-purpose)
@@ -35,6 +37,7 @@ The E-Shop Frontend is designed as a realistic e-commerce user interface connect
 The application supports:
 
 - Product browsing
+- Paginated product listing
 - Product details
 - Discount products
 - User login and registration
@@ -83,6 +86,7 @@ https://github.com/jroumpekas/eshop-springboot-backend
 ### Product Browsing
 
 - Product listing page
+- Paginated product listing
 - Product details page
 - Product cards with image, price, stock, category, rating, and discount information
 - Discount products page
@@ -134,7 +138,7 @@ https://github.com/jroumpekas/eshop-springboot-backend
 
 ### Backend API Configuration
 
-- Backend URL configured through Angular environment file
+- Backend URL configured through Angular environment files
 - Services use `environment.apiUrl` instead of hardcoded backend URLs
 - Easier transition from local development to deployment
 
@@ -191,6 +195,7 @@ Main backend API endpoints used by the frontend:
 
 ```http
 GET  /api/products
+GET  /api/products/paged?page=0&size=3&sort=name
 GET  /api/products/{id}
 POST /api/auth/login
 POST /api/auth/register
@@ -207,7 +212,7 @@ Protected API requests use a JWT token through an Angular HTTP interceptor.
 
 The frontend uses Angular environment configuration for the backend API URL.
 
-Example:
+Example development configuration:
 
 ```ts
 export const environment = {
@@ -228,6 +233,21 @@ Before running the frontend, check the backend API URL in:
 
 ```text
 src/environments/environment.ts
+```
+
+For production builds, configure the deployed backend URL in:
+
+```text
+src/environments/environment.prod.ts
+```
+
+Example production configuration:
+
+```ts
+export const environment = {
+  production: true,
+  apiUrl: 'https://your-backend-url/api'
+};
 ```
 
 ---
@@ -258,6 +278,32 @@ The checkout flow works as follows:
 5. The backend creates the order and order items.
 6. The frontend clears the cart after a successful checkout.
 7. The user is redirected to the My Orders page.
+
+---
+
+## Product Pagination
+
+The product list can load products from the backend paginated endpoint:
+
+```http
+GET /api/products/paged?page=0&size=3&sort=name
+```
+
+The backend returns a paginated response. Products are read from the `content` field, while pagination metadata such as `totalPages`, `totalElements`, and `number` is used by the product list page.
+
+Example response structure:
+
+```json
+{
+  "content": [],
+  "totalElements": 0,
+  "totalPages": 0,
+  "size": 3,
+  "number": 0,
+  "first": true,
+  "last": true
+}
+```
 
 ---
 
@@ -327,6 +373,50 @@ ng build
 
 The production build output will be generated in the `dist/` directory.
 
+For this project, the build output is generated under:
+
+```text
+dist/e-shop
+```
+
+---
+
+## Deployment
+
+The Angular frontend can be deployed to static hosting providers such as Vercel, Netlify, or GitHub Pages.
+
+Before deployment:
+
+1. Make sure the backend is deployed and accessible online.
+2. Configure the production backend API URL in:
+
+```text
+src/environments/environment.prod.ts
+```
+
+Example:
+
+```ts
+export const environment = {
+  production: true,
+  apiUrl: 'https://your-backend-url/api'
+};
+```
+
+3. Build the frontend:
+
+```bash
+ng build
+```
+
+4. Deploy the generated output folder:
+
+```text
+dist/e-shop
+```
+
+The backend CORS configuration must allow the deployed frontend URL.
+
 ---
 
 ## Current Status
@@ -336,6 +426,7 @@ Completed:
 - Angular project setup
 - Responsive layout and navigation
 - Product list page
+- Paginated product listing
 - Product details page
 - Discounts page
 - Cart functionality
@@ -350,6 +441,7 @@ Completed:
 - Backend product data integration
 - Backend order integration
 - Environment-based backend API URL configuration
+- Successful production build with `ng build`
 
 ---
 
@@ -365,7 +457,7 @@ Future improvements may include:
 - Product search and filtering UI
 - More automated tests
 - Further responsive UI refinements
-- Deployment configuration
+- Full production deployment
 
 ---
 
@@ -383,6 +475,7 @@ It demonstrates:
 - User-facing e-commerce workflows
 - Integration with a Spring Boot backend
 - Environment-based API configuration
+- Product pagination connected to a backend REST endpoint
 
 ---
 
