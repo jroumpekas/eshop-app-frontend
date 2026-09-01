@@ -19,7 +19,7 @@ export class AdminProducts implements OnInit {
 
   isSaving = signal(false);
   isEditing = signal(false);
-  editingProductId = signal<number | null>(null);
+  editingProductId = signal<string | null>(null); // <-- Αλλαγή από number | null σε string | null
 
   successMessage = signal<string | null>(null);
   errorMessage = signal<string | null>(null);
@@ -84,7 +84,7 @@ export class AdminProducts implements OnInit {
 
   editProduct(product: Product): void {
     this.isEditing.set(true);
-    this.editingProductId.set(product.id);
+    this.editingProductId.set(product.id); // Τώρα δέχεται string κανονικά
     this.successMessage.set(null);
     this.errorMessage.set(null);
 

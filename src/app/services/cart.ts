@@ -22,7 +22,6 @@ export class CartService {
   );
 
   readonly isEmpty = computed(() => this.cartItems().length === 0);
-  add: any;
 
   addToCart(product: Product): void {
     if (product.stock === 0) return;
@@ -45,7 +44,7 @@ export class CartService {
     });
   }
 
-  increaseQuantity(productId: number): void {
+  increaseQuantity(productId: string): void { // <-- string (UUID)
     this.cartItemsSignal.update(items =>
       items.map(item =>
         item.product.id === productId
@@ -58,7 +57,7 @@ export class CartService {
     );
   }
 
-  decreaseQuantity(productId: number): void {
+  decreaseQuantity(productId: string): void { // <-- string (UUID)
     this.cartItemsSignal.update(items =>
       items
         .map(item =>
@@ -70,7 +69,7 @@ export class CartService {
     );
   }
 
-  removeFromCart(productId: number): void {
+  removeFromCart(productId: string): void { // <-- string (UUID)
     this.cartItemsSignal.update(items =>
       items.filter(item => item.product.id !== productId)
     );
