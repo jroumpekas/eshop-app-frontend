@@ -12,15 +12,15 @@ import { CartService } from '../../services/cart';
 export class Cart {
   readonly cartService = inject(CartService);
 
-  increase(productId: number): void {
+  increase(productId: string): void { // <-- string (UUID)
     this.cartService.increaseQuantity(productId);
   }
 
-  decrease(productId: number): void {
+  decrease(productId: string): void { // <-- string (UUID)
     this.cartService.decreaseQuantity(productId);
   }
 
-  remove(productId: number): void {
+  remove(productId: string): void { // <-- string (UUID)
     this.cartService.removeFromCart(productId);
   }
 

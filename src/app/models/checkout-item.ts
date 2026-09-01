@@ -1,4 +1,4 @@
 export interface CheckoutItem {
-  productId: number;
+  productId: string;
   quantity: number;
 }

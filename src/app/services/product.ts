@@ -34,23 +34,24 @@ export class ProductService {
   }
 
   loadProducts(): void {
-    this._isLoading.set(true);
-    this._errorMessage.set(null);
+  this._isLoading.set(true);
+  this._errorMessage.set(null);
 
-    this.http.get<Product[]>(this.apiUrl).subscribe({
-      next: (productsFromBackend) => {
-        this._products.set(productsFromBackend);
-        this._isLoading.set(false);
-      },
-      error: (error) => {
-        console.error('Error loading products:', error);
-        this._errorMessage.set('Δεν ήταν δυνατή η φόρτωση των προϊόντων.');
-        this._isLoading.set(false);
-      },
-    });
-  }
+  this.http.get<Product[]>(this.apiUrl).subscribe({
+    next: (productsFromBackend) => {
+      console.log('🔥 FRESH PRODUCTS FROM BACKEND:', productsFromBackend); // <-- Δες τι τυπώνει εδώ!
+      this._products.set(productsFromBackend);
+      this._isLoading.set(false);
+    },
+    error: (error) => {
+      console.error('Error loading products:', error);
+      this._errorMessage.set('Δεν ήταν δυνατή η φόρτωση των προϊόντων.');
+      this._isLoading.set(false);
+    },
+  });
+}
 
-  getById(id: number): Product | undefined {
+  getById(id: string): Product | undefined { // <-- string (UUID)
     return this._products().find((product) => product.id === id);
   }
 
@@ -58,17 +59,23 @@ export class ProductService {
     return this.http.post<Product>(this.apiUrl, payload);
   }
 
-  updateProduct(id: number, payload: ProductPayload): Observable<Product> {
+  updateProduct(id: string, payload: ProductPayload): Observable<Product> { // <-- string (UUID)
     return this.http.put<Product>(`${this.apiUrl}/${id}`, payload);
   }
 
-  deleteProduct(id: number): Observable<void> {
+  deleteProduct(id: string): Observable<void> { // <-- string (UUID)
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   getPaginatedProducts(page: number = 0, size: number = 3, sort: string = 'name') {
-  return this.http.get<PageResponse<Product>>(
-    `${this.apiUrl}/paged?page=${page}&size=${size}&sort=${sort}`
-  );
-}
+    return this.http.get<PageResponse<Product>>(
+      `${this.apiUrl}/paged?page=${page}&size=${size}&sort=${sort}`
+    );
+  }
+
+  // product.ts (ProductService)
+  getByIdFromBackend(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
 }
